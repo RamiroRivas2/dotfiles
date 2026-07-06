@@ -1,0 +1,13 @@
+# starship prompt config
+# translated 1:1 from programs.starship.settings in home.nix.
+# bootstrap.ps1 points the STARSHIP_CONFIG env var at this file - edit HERE.
+
+add_newline = false
+format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+
+[cmd_duration]
+format = "[$duration]($style) "
