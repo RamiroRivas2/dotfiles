@@ -7,6 +7,10 @@ His repo uses Nix + nix-darwin + home-manager, none of which exist on
 Windows. This repo does the same jobs with what Windows ships with:
 **winget** for packages and **PowerShell** for the glue.
 
+This is the **Windows half**. The **Linux half** - my WSL Ubuntu, managed
+with real Nix + home-manager like the video - lives in
+[RamiroRivas2/dotfiles-wsl](https://github.com/RamiroRivas2/dotfiles-wsl).
+
 ## What you get
 
 Running `bootstrap.ps1` builds:
