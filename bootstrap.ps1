@@ -97,11 +97,15 @@ Step 'WezTerm'
 [Environment]::SetEnvironmentVariable('WEZTERM_CONFIG_FILE', "$repo\home\wezterm\wezterm.lua", 'User')
 $env:WEZTERM_CONFIG_FILE = "$repo\home\wezterm\wezterm.lua"
 $oldWez = Join-Path $HOME '.wezterm.lua'
-if (Test-Path $oldWez) {
+if ((Test-Path $oldWez) -and -not (Select-String -Path $oldWez -SimpleMatch 'home/wezterm/wezterm.lua' -Quiet)) {
     Rename-Item $oldWez "$oldWez.backup-$stamp"
     Note "your old ~/.wezterm.lua was backed up to .wezterm.lua.backup-$stamp"
 }
-Ok 'WEZTERM_CONFIG_FILE -> repo (restart WezTerm to pick it up)'
+# stub fallback: launches that miss the env var (e.g. before the next
+# sign-in refreshes it) still load the repo config through this file
+$repoFwd = $repo -replace '\\', '/'
+Set-Content $oldWez "-- stub: the real config lives in the dotfiles repo (see WEZTERM_CONFIG_FILE too)`nreturn dofile('$repoFwd/home/wezterm/wezterm.lua')"
+Ok 'WEZTERM_CONFIG_FILE -> repo + ~/.wezterm.lua stub (restart WezTerm to pick it up)'
 
 Step 'starship'
 [Environment]::SetEnvironmentVariable('STARSHIP_CONFIG', "$repo\home\starship.toml", 'User')
