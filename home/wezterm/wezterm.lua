@@ -17,8 +17,11 @@ config.font_size = 12.0
 config.window_background_opacity = 0.8
 -- Windows version of macos_window_background_blur
 config.win32_system_backdrop = "Acrylic"
-config.hide_tab_bar_if_only_one_tab = true
-config.window_decorations = "RESIZE"
+-- his config hides all window chrome (very Mac). On Windows that leaves
+-- nothing to drag or close with - so keep the tab bar always visible and
+-- draw min/max/close buttons into it. Drag the window by the tab bar.
+config.hide_tab_bar_if_only_one_tab = false
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- start in PowerShell 7 (your daily shell). On his Mac this is implicit (zsh).
 config.default_prog = { "pwsh.exe", "-NoLogo" }

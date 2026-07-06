@@ -3,7 +3,9 @@
 # bootstrap.ps1 points the STARSHIP_CONFIG env var at this file - edit HERE.
 
 add_newline = false
-format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
+# single line: folder and ❯ together (kun's original had $line_break before
+# $character, which puts the input on its own line - I didn't like that)
+format = "$directory$git_branch$git_status$cmd_duration$character"
 
 [character]
 success_symbol = "[❯](purple)"
