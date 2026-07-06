@@ -52,23 +52,31 @@ Then always: `add` → `git commit -m "what I did"` → `push`.
 | **Ctrl+Shift+P** | command palette - search ANY action (splits, themes...) |
 | Ctrl+Shift+L | debug overlay (shows config errors) |
 
-## tmux (inside WSL - terminal sessions that survive closing the window)
+## herdr (inside WSL - kun's agent multiplexer, our tmux replacement)
 
-Start with `tmux`. Reattach later with `tmux attach`. The **prefix is Ctrl+a**
-(press Ctrl+a, release, then the key):
+Start with `herdr`. Sessions survive closing the window - run `herdr` again to
+reattach. The **prefix is Ctrl+a** (press Ctrl+a, release, then the key):
 
 | After Ctrl+a | Does |
 |---|---|
-| `\|` / `-` | split side-by-side / stacked (keeps current folder) |
+| `v` / `-` | split the pane (the two directions) |
 | `h j k l` | jump between panes (left/down/up/right) |
-| `H J K L` | resize pane |
-| `c` | new window (tab) |
-| `d` | detach (everything keeps running!) |
-| `[` | scroll/copy mode (vi keys: `v` select, `y` copy, `q` exit) |
-| `r` | reload tmux config |
-| **`A`** | **the Kun layout: Claude Code left, `nvim .` right** |
+| `c` | new tab |
+| `1`..`9` | jump straight to tab 1-9 |
+| `x` | close pane |
+| `z` | zoom pane (fullscreen toggle) |
+| `[` | scroll/copy mode |
+| `b` | toggle the sidebar |
+| `w` | workspace picker |
+| **`Shift+A`** | **open Claude Code in a new pane** |
+| `q` | detach - everything keeps running |
 
-No prefix needed: **Alt+1..5** jumps straight to window 1-5. Mouse works too.
+The sidebar is the point: it shows each agent's state (working / blocked /
+done) so you can run several Claudes and see who needs you. Mouse works.
+Config: `home/herdr.toml` in the WSL repo.
+
+tmux is still installed (config kept at `home/tmux.conf`) because firstmate
+uses it as its backend - you just don't have to drive it by hand anymore.
 
 ## Neovim (same config both sides)
 

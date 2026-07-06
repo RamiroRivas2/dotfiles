@@ -79,13 +79,19 @@ This is the deepest difference between your machine and the video.
 - **lazygit** - full git UI in the terminal: stage, commit, push, branch,
   resolve - all visual. Type `lazygit` in any repo, `q` quits.
 
-### tmux (WSL) - sessions that outlive the window
-A terminal multiplexer: one window holds many shells (panes/tabs), and
-sessions keep running after you close the window - reconnect with
-`tmux attach`. This is what makes overnight agents possible. Prefix is
-**Ctrl+a**. The custom **Ctrl+a A** binding builds the video's signature
-layout: Claude Code left, `nvim .` right. Config: `home/tmux.conf` in the
-WSL repo (we fixed copy-paste corruption in its colors).
+### herdr (WSL) - the agent multiplexer (kun's actual tool, video ch. 33:22)
+A terminal multiplexer like tmux - one window holds many shells, sessions
+survive closing the window - but *agent-aware*: a sidebar shows each running
+agent's state (working / blocked / done), so you can run several Claudes and
+see who needs attention. Prefix set to **Ctrl+a**; **Ctrl+a Shift+A** opens
+Claude Code in a new pane. Start/reattach with `herdr`. Config:
+`home/herdr.toml` in the WSL repo.
+
+### tmux (WSL) - kept as firstmate's engine
+The classic multiplexer herdr replaces for daily use. It stays installed
+because firstmate drives tmux as its verified backend (herdr support there is
+experimental). Config: `home/tmux.conf` (prefix Ctrl+a, Ctrl+a A = Claude +
+nvim layout) if you ever drive it directly.
 
 ### Neovim (the editor)
 A modern vim: edits text with composable keyboard commands, extended by Lua
