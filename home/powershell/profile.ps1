@@ -31,6 +31,9 @@ function cc { claude --dangerously-skip-permissions @args }
 function co { codex --full-auto @args }
 
 # starship prompt (programs.starship in home.nix; config lives in home\starship.toml)
+# point at the repo's config from here too, so it works even in shells that
+# were spawned before bootstrap set the user env var
+$env:STARSHIP_CONFIG = Join-Path (Split-Path $PSScriptRoot) 'starship.toml'
 if (Get-Command starship -ErrorAction SilentlyContinue) {
     Invoke-Expression (&starship init powershell)
 }
