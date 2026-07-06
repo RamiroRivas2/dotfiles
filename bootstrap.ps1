@@ -33,6 +33,7 @@ if (-not $ConfigOnly) {
         @{ cmd = 'nvim';     id = 'Neovim.Neovim' }
         @{ cmd = 'starship'; id = 'Starship.Starship' }        # prompt
         @{ cmd = 'wezterm';  id = 'wez.wezterm' }              # terminal
+        @{ cmd = 'gh';       id = 'GitHub.cli' }               # github cli (gh-axi + no-mistakes use it)
     )
     foreach ($t in $tools) {
         if (Get-Command $t.cmd -ErrorAction SilentlyContinue) {
@@ -45,6 +46,31 @@ if (-not $ConfigOnly) {
             if ($LASTEXITCODE -eq 0) { Ok "$($t.cmd) installed" }
             else { Note "$($t.id) failed (exit $LASTEXITCODE) - install it manually later" }
         }
+    }
+
+    # ------------------------------------------------- 1b. workflow tools
+    # the agent-workflow layer from the video (kunchenguid's own tools)
+    Step 'Workflow tools (npm + installers)'
+    if (Get-Command npm -ErrorAction SilentlyContinue) {
+        foreach ($pkg in 'gh-axi', 'gnhf') {
+            if (Get-Command $pkg -ErrorAction SilentlyContinue) { Ok "$pkg already installed" }
+            else { npm install -g $pkg 2>&1 | Out-Null; Ok "$pkg installed" }
+        }
+    } else {
+        Note 'npm not found - skipping gh-axi/gnhf (install Node.js first)'
+    }
+    if (Get-Command no-mistakes -ErrorAction SilentlyContinue) {
+        Ok 'no-mistakes already installed'
+    } else {
+        irm https://raw.githubusercontent.com/kunchenguid/no-mistakes/main/docs/install.ps1 | iex
+        Ok 'no-mistakes installed'
+    }
+    # lavish skill for Claude Code (HTML artifacts you can annotate)
+    if (Test-Path (Join-Path $HOME '.claude\skills\lavish\SKILL.md')) {
+        Ok 'lavish skill already installed'
+    } elseif (Get-Command npx -ErrorAction SilentlyContinue) {
+        npx -y skills add kunchenguid/lavish-axi --skill lavish -a claude-code -g -y --copy 2>&1 | Out-Null
+        Ok 'lavish skill installed'
     }
 
     # ---------------------------------------------------------- 2. the font

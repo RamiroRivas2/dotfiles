@@ -88,6 +88,21 @@ pwsh -File .\rebuild.ps1
 - **Font/theme**: `home\wezterm\wezterm.lua` and `home\starship.toml`.
 - **Git identity**: not managed here (already set globally via `git config`).
 
+## Workflow tools (from the video description)
+
+The layer on top of the configs - installed by `bootstrap.ps1` where possible:
+
+| His tool | Here | Notes |
+|---|---|---|
+| skills CLI | `npx skills ...` on demand | no install needed; use `--copy` on Windows |
+| gh-axi (AXI) | npm global, both sides | agent-friendly GitHub CLI; needs `gh auth login` once |
+| lavish | Claude Code skill, both sides | agent writes HTML artifacts you annotate in the browser |
+| no-mistakes | native install, both sides | `no-mistakes init` per repo, then `git push no-mistakes` |
+| gnhf | npm global, both sides | overnight agent loops; run on a branch until you trust it |
+| treehouse | WSL only | worktree pool for parallel agents; firstmate needs it |
+| firstmate | cloned to WSL `~/github/firstmate` | multi-agent crew in tmux; start with `claude` inside it |
+| OpenSuperWhisper | skipped - macOS-only | use Win+H voice typing, or install [Handy](https://github.com/cjpais/Handy) |
+
 ## Notes
 
 - First `nvim` launch clones lazy.nvim and all plugins from GitHub - needs
