@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dracula">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flows - from double-click to done</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :where(.grid, .flex) > * { min-width: 0; }
+  :where(p, h1, h2, h3, h4, li, dd, td, th, .badge, .label) { overflow-wrap: anywhere; }
+  .kbd { white-space: nowrap; height: auto; min-height: 1.6em; line-height: 1.6; padding-block: 0.08em; }
+  h1, h2, h3 { line-height: 1.25; padding-bottom: 0.15em; }
+  .alert > span { line-height: 1.9; }
+  code { word-break: break-all; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  ol.flow > li { margin-bottom: 0.6rem; }
+</style>
+</head>
+<body class="bg-base-100 text-base-content">
+
+<div class="navbar bg-base-200/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+  <div class="navbar-start"><span class="font-bold px-2">Flows</span></div>
+  <div class="navbar-end overflow-x-auto">
+    <ul class="menu menu-horizontal menu-sm flex-nowrap px-1">
+      <li><a href="#orient">Where am I?</a></li>
+      <li><a href="#daily">Daily</a></li>
+      <li><a href="#nomistakes">no-mistakes</a></li>
+      <li><a href="#agent">Ask Claude</a></li>
+      <li><a href="#gnhf">Overnight</a></li>
+      <li><a href="#tweak">Tweak setup</a></li>
+      <li><a href="#firstmate">firstmate</a></li>
+    </ul>
+  </div>
+</div>
+
+<main class="mx-auto max-w-4xl p-4 lg:p-8 space-y-12">
+
+  <section class="hero bg-base-200 rounded-box p-6">
+    <div class="hero-content flex-col text-center gap-2">
+      <h1 class="text-4xl font-bold">Flows</h1>
+      <p class="max-w-2xl opacity-80">Complete recipes, every keystroke, starting from "the computer is on and nothing is open." Each step says what you type AND what you should see, so you always know if you're on track.</p>
+    </div>
+  </section>
+
+  <!-- ORIENTATION -->
+  <section id="orient" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 0 · Open a terminal &amp; know where you are</h2>
+    <p class="text-sm opacity-80">Every other flow starts here. Your machine has TWO worlds and the #1 beginner confusion is not knowing which one you're typing into.</p>
+    <ol class="flow list-decimal list-inside text-sm">
+      <li>Press the <span class="kbd kbd-sm">Win</span> key, type <b>wezterm</b>, press <span class="kbd kbd-sm">Enter</span>. A translucent purple window opens.</li>
+      <li>Look at the prompt. You are in <b>Windows (PowerShell)</b>. It looks like:<br><span class="badge badge-soft badge-primary badge-sm mt-1">Windows</span> <code>~ ❯</code> &nbsp;— folders look like <code>C:\Users\ramir\...</code></li>
+      <li>Type <code>wsl</code> and press <span class="kbd kbd-sm">Enter</span>. Now you are in <b>Ubuntu (Linux)</b>:<br><span class="badge badge-soft badge-secondary badge-sm mt-1">WSL</span> <code>~ ❯</code> &nbsp;— folders look like <code>/home/ramiro/...</code> and your projects are in <code>~/github</code></li>
+      <li>To go back to Windows: type <code>exit</code>, <span class="kbd kbd-sm">Enter</span>.</li>
+    </ol>
+    <div class="alert alert-info"><span>Quick identity check any time: type <code>pwd</code> <span class="kbd kbd-xs">Enter</span>. An answer starting <code>C:\</code> = Windows; starting <code>/home</code> or <code>/mnt</code> = Ubuntu. The agent tools (herdr, no-mistakes, gnhf, treehouse, firstmate) all live in <b>Ubuntu</b>.</span></div>
+  </section>
+
+  <!-- DAILY -->
+  <section id="daily" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 1 · The daily driver (herdr + Claude + Neovim)</h2>
+    <p class="text-sm opacity-80">The workflow from the video. Do this until it's muscle memory.</p>
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold text-sm mb-1"><span class="badge badge-warning badge-sm">first time only</span></h3>
+      <ol class="flow list-decimal list-inside text-sm">
+        <li>Flow 0 into Ubuntu, then: <code>herdr integration install claude</code> <span class="kbd kbd-xs">Enter</span> — teaches the sidebar to read Claude's real status.</li>
+        <li>Start herdr once (next list), press <span class="kbd kbd-xs">Ctrl+a</span> then <span class="kbd kbd-xs">Shift+A</span>, and complete the one-time Claude login in the browser it points you to.</li>
+      </ol>
+    </div></div>
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold text-sm mb-1"><span class="badge badge-success badge-sm">every day</span></h3>
+      <ol class="flow list-decimal list-inside text-sm">
+        <li>WezTerm → <code>wsl</code> → <code>cd ~/github/dotfiles-wsl</code> (or whatever project).</li>
+        <li><code>herdr</code> <span class="kbd kbd-xs">Enter</span>. You'll see a sidebar on the left and your shell on the right. (If it says it can't start, you're probably already inside herdr.)</li>
+        <li><span class="kbd kbd-xs">Ctrl+a</span> then <span class="kbd kbd-xs">Shift+A</span> — Claude Code opens in a pane. The sidebar row starts showing working / idle / blocked.</li>
+        <li><span class="kbd kbd-xs">Ctrl+a</span> then <span class="kbd kbd-xs">v</span> — a second pane opens on the right. Type <code>nvim .</code> <span class="kbd kbd-xs">Enter</span>. That's the Kun layout: agent left, editor right.</li>
+        <li>Talk to Claude on the left; look at code on the right. Click any pane to focus it (mouse works).</li>
+        <li>Done for now? <span class="kbd kbd-xs">Ctrl+a</span> then <span class="kbd kbd-xs">q</span> — you're back in plain Ubuntu, and <b>everything keeps running</b>. Close the window, walk away.</li>
+        <li>Hours later: WezTerm → <code>wsl</code> → <code>herdr</code> — everything is exactly where you left it.</li>
+      </ol>
+      <p class="text-xs opacity-60 mt-1">✅ You've got it when: you can leave and come back without losing Claude's conversation.</p>
+    </div></div>
+  </section>
+
+  <!-- NO-MISTAKES -->
+  <section id="nomistakes" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 2 · Push through no-mistakes (your question!)</h2>
+    <p class="text-sm opacity-80">Goal: make a change, and instead of pushing straight to GitHub, let the AI pipeline review → test → fix it first. We'll use your real <code>dotfiles-wsl</code> repo as the example.</p>
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold text-sm mb-1"><span class="badge badge-warning badge-sm">first time only</span> (one minute)</h3>
+      <ol class="flow list-decimal list-inside text-sm">
+        <li>Flow 0 into Ubuntu.</li>
+        <li><code>no-mistakes daemon start</code> <span class="kbd kbd-xs">Enter</span> — starts the background worker. Then <code>no-mistakes daemon status</code> should say running.</li>
+        <li><code>no-mistakes doctor</code> <span class="kbd kbd-xs">Enter</span> — a checklist prints. You want green on git, gh, claude, daemon. (Yours is green except the daemon you just started.)</li>
+        <li>Go to the repo and add the gate: <code>cd ~/github/dotfiles-wsl</code> then <code>no-mistakes init</code> <span class="kbd kbd-xs">Enter</span>. It says it added a remote called <b>no-mistakes</b>. That's it - one-time per repo.</li>
+      </ol>
+    </div></div>
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold text-sm mb-1"><span class="badge badge-success badge-sm">every time you have a change</span></h3>
+      <ol class="flow list-decimal list-inside text-sm">
+        <li>Be in the repo: <code>cd ~/github/dotfiles-wsl</code></li>
+        <li>Make a branch for the change: <code>git switch -c my-change</code> <span class="kbd kbd-xs">Enter</span>. (Branch = a safe copy of the timeline; nothing touches main until the end.)</li>
+        <li>Do the work — edit files with <code>nvim</code>, or tell Claude what to change. Then stage and commit:<br><code>add</code> <span class="kbd kbd-xs">Enter</span> then <code>git commit -m "describe the change"</code> <span class="kbd kbd-xs">Enter</span></li>
+        <li>THE moment — push to the gate instead of GitHub:<br><code>git push no-mistakes my-change</code> <span class="kbd kbd-xs">Enter</span><br>The terminal accepts it quickly; the pipeline now runs in the background.</li>
+        <li>Watch it work: <code>no-mistakes attach</code> <span class="kbd kbd-xs">Enter</span> — a full-screen dashboard opens showing steps flowing: intent → rebase → review → test → document → lint → push → pr → ci. AI reviewers read your change; if a step finds problems, it fixes them or asks you.</li>
+        <li>If it pauses on a question (an "approval gate"), read what it found and pick approve / fix / skip with the keys it shows.</li>
+        <li>When the pipeline finishes: it pushed the branch to GitHub and opened a <b>pull request</b> for you. It prints the PR link — <span class="kbd kbd-xs">Ctrl</span>+click it (or check github.com/RamiroRivas2/dotfiles-wsl).</li>
+        <li>On the PR page, review and click <b>Merge</b> when happy. Then locally: <code>m</code> (back to main) and <code>pull</code> (get the merged result).</li>
+      </ol>
+      <p class="text-xs opacity-60 mt-1">✅ You've got it when: a PR appears on GitHub that you never manually created. ⚠️ Habit warning: plain <code>push</code> still goes straight to GitHub and skips ALL of this — the gate only runs when you push to <code>no-mistakes</code>.</p>
+    </div></div>
+    <div class="alert"><span>If nothing seems to happen after the push: <code>no-mistakes daemon status</code> — the daemon being off is cause #1. Then <code>no-mistakes runs</code> to see history, <code>no-mistakes attach</code> to re-open the dashboard.</span></div>
+  </section>
+
+  <!-- ASK CLAUDE -->
+  <section id="agent" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 3 · Ask Claude to change code, review it, ship it</h2>
+    <p class="text-sm opacity-80">The basic agent loop — works in any repo, either world.</p>
+    <ol class="flow list-decimal list-inside text-sm">
+      <li>Terminal → go to the project (<code>cd ~/github/...</code> in Ubuntu, or <code>cd Documents\GitHub\...</code> on Windows).</li>
+      <li>Make a branch: <code>git switch -c fix-thing</code></li>
+      <li><code>claude</code> <span class="kbd kbd-xs">Enter</span> (or <code>cc</code> to skip permission prompts once you trust the repo).</li>
+      <li>Describe the goal in plain English, like you talk to me. Let it work; answer its questions.</li>
+      <li>When it says done, YOU verify: run the app/tests, or eyeball the changes with <code>lazygit</code> (arrow keys to browse files, <span class="kbd kbd-xs">Enter</span> to see the diff, <span class="kbd kbd-xs">q</span> to quit).</li>
+      <li>Happy? <code>add</code> → <code>git commit -m "what changed"</code> → <code>push</code> (or <code>git push no-mistakes fix-thing</code> to use Flow 2's gate).</li>
+      <li>Not happy? Tell Claude what's wrong and loop; or throw it all away: <code>git checkout .</code> (careful: discards ALL uncommitted edits).</li>
+    </ol>
+    <p class="text-xs opacity-60">✅ You've got it when: commits on GitHub describe work you delegated instead of typed.</p>
+  </section>
+
+  <!-- GNHF -->
+  <section id="gnhf" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 4 · Overnight run (gnhf)</h2>
+    <p class="text-sm opacity-80">You sleep, Claude grinds. Run it INSIDE herdr so it survives the window closing.</p>
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold text-sm mb-1"><span class="badge badge-warning badge-sm">before the first real night</span></h3>
+      <ol class="flow list-decimal list-inside text-sm">
+        <li>Windows: Settings → System → Power → set "Sleep when plugged in" to <b>Never</b>, and plug the machine in. (WSL can't keep Windows awake by itself — a sleeping laptop = frozen run.)</li>
+        <li>Check your Claude credits/usage — every iteration spends real usage.</li>
+        <li>Do a tiny daytime trial: <code>gnhf --max-iterations 2 "add comments to the most confusing function"</code> and watch what it does.</li>
+      </ol>
+    </div></div>
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold text-sm mb-1"><span class="badge badge-success badge-sm">the night run</span></h3>
+      <ol class="flow list-decimal list-inside text-sm">
+        <li>Flow 0 → Ubuntu → <code>herdr</code> → go to the repo: <code>cd ~/github/&lt;project&gt;</code></li>
+        <li>Clean tree check: <code>git status</code> must say "nothing to commit". Commit or stash anything pending — gnhf refuses a dirty tree.</li>
+        <li>Launch with caps: <code>gnhf --max-iterations 25 --stop-when "all tests pass" "your objective here"</code><br>A starfield dashboard appears; it creates a branch like <code>gnhf/your-objective</code> and starts iterating.</li>
+        <li><span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">q</span> to detach. Close everything. Sleep.</li>
+        <li>Morning: <code>wsl</code> → <code>herdr</code> → see where it got. Read the diary: <code>cat .gnhf/runs/*/notes.md</code></li>
+        <li>Review the commits: <code>git log --oneline main..gnhf/your-objective</code> and the full change: <code>git diff main...gnhf/your-objective</code></li>
+        <li>Keep it: <code>m</code> then <code>git merge gnhf/your-objective</code>. Or keep parts (<code>git cherry-pick &lt;commit&gt;</code>). Or delete the branch and lose nothing: <code>git branch -D gnhf/your-objective</code></li>
+      </ol>
+      <p class="text-xs opacity-60 mt-1">✅ You've got it when: you wake up to commits worth keeping. If it stopped early, three failures in a row or empty credits are the usual reasons — notes.md tells the story.</p>
+    </div></div>
+  </section>
+
+  <!-- TWEAK -->
+  <section id="tweak" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 5 · Change your own setup (example: add an alias)</h2>
+    <p class="text-sm opacity-80">Say you want <code>st</code> to mean <code>git status</code>. Same pattern for any config change.</p>
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="card card-border bg-base-200"><div class="card-body p-4">
+        <h3 class="font-semibold text-sm"><span class="badge badge-soft badge-primary badge-sm">Windows side</span></h3>
+        <ol class="flow list-decimal list-inside text-sm">
+          <li><code>cd Documents\GitHub\dotfiles</code></li>
+          <li><code>nvim home\powershell\profile.ps1</code></li>
+          <li>Find the aliases, add a line: <code>function st { git status }</code> (press <span class="kbd kbd-xs">i</span> to type, <span class="kbd kbd-xs">Esc</span> when done - it saves)</li>
+          <li><span class="kbd kbd-xs">:q</span> to leave · open a NEW terminal · type <code>st</code> - works</li>
+          <li><code>add</code> → <code>git commit -m "add st alias"</code> → <code>push</code></li>
+        </ol>
+      </div></div>
+      <div class="card card-border bg-base-200"><div class="card-body p-4">
+        <h3 class="font-semibold text-sm"><span class="badge badge-soft badge-secondary badge-sm">WSL side</span></h3>
+        <ol class="flow list-decimal list-inside text-sm">
+          <li><code>cd ~/github/dotfiles-wsl</code></li>
+          <li><code>nvim home.nix</code> - find <code>shellAliases</code>, add: <code>st = "git status";</code></li>
+          <li><span class="kbd kbd-xs">Esc</span> then <span class="kbd kbd-xs">:q</span></li>
+          <li><code>./rebuild.sh</code> - Nix applies it · open a new shell · <code>st</code> works</li>
+          <li><code>add</code> → <code>git commit -m "add st alias"</code> → <code>push</code></li>
+        </ol>
+      </div></div>
+    </div>
+    <p class="text-xs opacity-60">Same loop for the prompt (starship), terminal look (wezterm.lua - saves apply instantly), Neovim, herdr keys (then <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">Shift+R</span> to reload), and agent rules (AGENTS.md - on Windows run <code>.\rebuild.ps1</code> after).</p>
+  </section>
+
+  <!-- FIRSTMATE -->
+  <section id="firstmate" class="space-y-3">
+    <h2 class="text-2xl font-bold">Flow 6 · First voyage with firstmate (when you're ready)</h2>
+    <ol class="flow list-decimal list-inside text-sm">
+      <li>Flow 0 → Ubuntu. Start tmux (firstmate's engine - not herdr for this one): <code>tmux new -s firstmate</code></li>
+      <li><code>cd ~/github/firstmate</code> then <code>claude</code> - that's the whole launch. It introduces itself as your first mate and checks its tools.</li>
+      <li>It will ask to install one missing helper (<code>tasks-axi</code>) - say yes.</li>
+      <li>Give it a safe, read-only first job:<br><i>"ahoy! scout my github project RamiroRivas2/InventorySystem - report on how invoices are generated"</i></li>
+      <li>It clones the repo under <code>projects/</code> and spawns a crew window named <code>fm-...</code>. Peek at it: <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">w</span>, pick the fm window, <b>look but don't type</b> (typing there = giving orders). <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">w</span> back to window 0.</li>
+      <li>Wait - the report lands and firstmate summarizes it in your chat. For real changes later, it hands you a PR link and waits for your <i>"merge it"</i>.</li>
+      <li>Detach with <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">d</span>; return with <code>tmux attach -t firstmate</code>.</li>
+    </ol>
+    <p class="text-xs opacity-60">⚠️ Every crewmate is a full Claude session - 3 parallel tasks ≈ 3x usage. Start with one.</p>
+  </section>
+
+  <section class="space-y-2">
+    <div class="alert alert-info"><span><b>The universal ending of every flow:</b> <code>add</code> → <code>git commit -m "..."</code> → <code>push</code>. If you did that, your work is safe on GitHub and no mistake is permanent.</span></div>
+    <p class="text-sm opacity-60">Companions: <code>manual.html</code> (every command), <code>CHEATSHEET.md</code> (quick keys), <code>GUIDE.md</code> (what everything is) - all in both dotfiles repos.</p>
+  </section>
+
+</main>
+</body>
+</html>
