@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dracula">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Manual - everything, every command</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/daisyui.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.5.19/themes.css">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.4/dist/index.global.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :where(.grid, .flex) > * { min-width: 0; }
+  :where(p, h1, h2, h3, h4, li, dd, td, th, .badge, .label) { overflow-wrap: anywhere; }
+  :where(img, svg, video) { max-width: 100%; height: auto; }
+  .kbd { white-space: nowrap; height: auto; min-height: 1.6em; line-height: 1.6; padding-block: 0.08em; }
+  h1 { line-height: 1.2; padding-bottom: 0.15em; }
+  .alert > span { line-height: 1.9; }
+  code { word-break: break-all; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+</style>
+</head>
+<body class="bg-base-100 text-base-content">
+
+<!-- STICKY NAV -->
+<div class="navbar bg-base-200/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+  <div class="navbar-start"><span class="font-bold px-2">The Manual</span></div>
+  <div class="navbar-end overflow-x-auto">
+    <ul class="menu menu-horizontal menu-sm flex-nowrap px-1">
+      <li><a href="#shell">Shell</a></li>
+      <li><a href="#rebuild">Rebuild</a></li>
+      <li><a href="#wezterm">WezTerm</a></li>
+      <li><a href="#herdr">herdr</a></li>
+      <li><a href="#neovim">Neovim</a></li>
+      <li><a href="#claude">Claude</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#trouble">Help</a></li>
+    </ul>
+  </div>
+</div>
+
+<main class="mx-auto max-w-6xl p-4 lg:p-8 space-y-12">
+
+  <!-- HERO -->
+  <section id="hero" class="hero bg-base-200 rounded-box p-6">
+    <div class="hero-content flex-col text-center gap-3">
+      <h1 class="text-4xl lg:text-5xl font-bold">The Manual</h1>
+      <p class="max-w-2xl opacity-80">Everything on your machines, every command, verified against the real installed tools (not from memory).
+      <span class="badge badge-soft badge-primary">Windows</span> = PowerShell 7 / WezTerm · <span class="badge badge-soft badge-secondary">WSL</span> = Ubuntu (type <span class="kbd kbd-sm">wsl</span>).</p>
+      <div class="w-full">
+        <p class="font-semibold mb-2 opacity-70">The golden path - your daily flow:</p>
+        <ul class="steps steps-vertical sm:steps-horizontal w-full">
+          <li class="step step-primary">WezTerm</li>
+          <li class="step step-primary"><span class="kbd kbd-sm">wsl</span></li>
+          <li class="step step-primary"><span class="kbd kbd-sm">herdr</span></li>
+          <li class="step step-primary"><span class="kbd kbd-sm">Ctrl+a</span> <span class="kbd kbd-sm">Shift+A</span></li>
+          <li class="step">Claude works, sidebar watches</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 SHELL -->
+  <section id="shell" class="space-y-3">
+    <h2 class="text-3xl font-bold">1 · Shell <span class="badge badge-soft badge-accent align-middle">both sides</span></h2>
+    <p class="opacity-80 text-sm">Same experience in PowerShell 7 (Windows) and zsh (WSL): aliases, ghost text, colors, prompt.</p>
+    <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+      <table class="table table-zebra table-sm">
+        <thead><tr><th>Command</th><th>Does</th><th>Example / note</th></tr></thead>
+        <tbody>
+          <tr><td><code>..</code></td><td>go up one folder</td><td></td></tr>
+          <tr><td><code>add</code></td><td>git add . (stage everything)</td><td>run before committing</td></tr>
+          <tr><td><code>push</code> / <code>pull</code></td><td>git push / git pull</td><td></td></tr>
+          <tr><td><code>m</code></td><td>git switch main</td><td>back to the main branch</td></tr>
+          <tr><td><code>cc</code></td><td>Claude Code, ALL permission prompts skipped</td><td>fast but trusting - be deliberate</td></tr>
+          <tr><td><code>co</code></td><td>Codex full-auto</td><td>only if you ever install Codex</td></tr>
+          <tr><td><code>lazygit</code></td><td>visual git UI in any repo</td><td><span class="kbd kbd-xs">q</span> quits; arrows + enter drive it</td></tr>
+          <tr><td><code>rg "text"</code></td><td>search text in all files here</td><td><code>rg "def create_invoice"</code></td></tr>
+          <tr><td><code>fd name</code></td><td>find files by name</td><td><code>fd invoice</code></td></tr>
+          <tr><td><code>fzf</code></td><td>fuzzy-pick from any list</td><td><code>fd . | fzf</code> then type to filter</td></tr>
+          <tr><td><code>jq .</code></td><td>pretty-print / query JSON</td><td><code>cat config.json | jq .</code></td></tr>
+          <tr><td><code>nvim file</code></td><td>edit a file</td><td><code>nvim CHEATSHEET.md</code></td></tr>
+          <tr><td><code>wsl</code></td><td>hop from PowerShell into Ubuntu</td><td>exit with <code>exit</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid gap-3 md:grid-cols-3 text-sm">
+      <div class="card card-border bg-base-200"><div class="card-body p-4"><h3 class="font-semibold">Ghost text</h3><p class="opacity-80">Gray suggestion from history appears as you type. <span class="kbd kbd-xs">Ctrl+F</span> accepts it. <span class="kbd kbd-xs">↑</span>/<span class="kbd kbd-xs">↓</span> browse history.</p></div></div>
+      <div class="card card-border bg-base-200"><div class="card-body p-4"><h3 class="font-semibold">Prompt signals</h3><p class="opacity-80"><span class="text-error font-bold">red ❯</span> = last command failed · branch name shows inside any repo · slow commands show duration.</p></div></div>
+      <div class="card card-border bg-base-200"><div class="card-body p-4"><h3 class="font-semibold">Colors</h3><p class="opacity-80">Commands turn <span class="text-success">green</span> when they exist / are spelled right (zsh), and PowerShell colors as you type.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 2 REBUILD -->
+  <section id="rebuild" class="space-y-3">
+    <h2 class="text-3xl font-bold">2 · Changing your setup</h2>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="card card-border bg-base-200"><div class="card-body p-4">
+        <h3 class="card-title text-base"><span class="badge badge-soft badge-primary">Windows</span> Documents\GitHub\dotfiles</h3>
+        <div class="overflow-x-auto"><table class="table table-sm">
+          <tbody>
+            <tr><td>aliases / prompt behavior</td><td><code>home\powershell\profile.ps1</code></td><td>new terminal</td></tr>
+            <tr><td>terminal look</td><td><code>home\wezterm\wezterm.lua</code></td><td>instant</td></tr>
+            <tr><td>prompt style</td><td><code>home\starship.toml</code></td><td>next prompt</td></tr>
+            <tr><td>Neovim</td><td><code>home\nvim\</code></td><td>restart nvim</td></tr>
+            <tr><td>agent rules</td><td><code>home\AGENTS.md</code></td><td><code>.\rebuild.ps1</code></td></tr>
+            <tr><td>add a program</td><td><code>$tools</code> in <code>bootstrap.ps1</code></td><td>re-run <code>bootstrap.ps1</code></td></tr>
+          </tbody>
+        </table></div>
+      </div></div>
+      <div class="card card-border bg-base-200"><div class="card-body p-4">
+        <h3 class="card-title text-base"><span class="badge badge-soft badge-secondary">WSL</span> ~/github/dotfiles-wsl</h3>
+        <div class="overflow-x-auto"><table class="table table-sm">
+          <tbody>
+            <tr><td>packages / aliases / zsh / prompt</td><td><code>home.nix</code></td><td><code>./rebuild.sh</code></td></tr>
+            <tr><td>Neovim / herdr / tmux / agent rules</td><td><code>home/nvim/</code> <code>home/herdr.toml</code> <code>home/tmux.conf</code> <code>home/AGENTS.md</code></td><td>live (symlinked)*</td></tr>
+          </tbody>
+        </table></div>
+        <p class="text-xs opacity-60">* herdr also wants <code>herdr server reload-config</code> (or <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">Shift+R</span>) to apply while running.</p>
+      </div></div>
+    </div>
+    <div class="alert alert-info"><span>Then always: <code>add</code> → <code>git commit -m "what I did"</code> → <code>push</code>. New machine someday = clone + <code>bootstrap.ps1</code> (Windows) / <code>bootstrap.sh</code> (WSL). That's the whole trick.</span></div>
+  </section>
+
+  <!-- 3 WEZTERM -->
+  <section id="wezterm" class="space-y-3">
+    <h2 class="text-3xl font-bold">3 · WezTerm <span class="badge badge-soft badge-primary align-middle">Windows</span></h2>
+    <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+      <table class="table table-zebra table-sm">
+        <thead><tr><th>Keys</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kbd kbd-sm">Ctrl+Shift+T</span> / <span class="kbd kbd-sm">Ctrl+Shift+W</span></td><td>new / close tab (the tab bar is also your window drag-handle, with real − □ ✕ buttons)</td></tr>
+          <tr><td><span class="kbd kbd-sm">Ctrl+Tab</span></td><td>switch tabs</td></tr>
+          <tr><td><span class="kbd kbd-sm">Ctrl+Shift+C</span> / <span class="kbd kbd-sm">Ctrl+Shift+V</span></td><td>copy / paste</td></tr>
+          <tr><td><span class="kbd kbd-sm">Ctrl+=</span> / <span class="kbd kbd-sm">Ctrl+-</span></td><td>font bigger / smaller</td></tr>
+          <tr><td><span class="kbd kbd-sm">Ctrl+Shift+P</span></td><td><b>command palette</b> - type to search every action (splits, themes, anything). Your escape hatch when you forget a key.</td></tr>
+          <tr><td><span class="kbd kbd-sm">Ctrl+Shift+F</span></td><td>search the scrollback</td></tr>
+          <tr><td><span class="kbd kbd-sm">Ctrl+Shift+L</span></td><td>debug overlay - config errors show here</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm opacity-70">Don't bother splitting panes in WezTerm - that's herdr's job inside WSL.</p>
+  </section>
+
+  <!-- 4 HERDR -->
+  <section id="herdr" class="space-y-3">
+    <h2 class="text-3xl font-bold">4 · herdr <span class="badge badge-soft badge-secondary align-middle">WSL</span> - your multiplexer</h2>
+    <p class="opacity-80 text-sm">Keeps shells and agents running in a background server - detach, close everything, come back later and it's all still alive. The sidebar shows each agent's state (working / blocked / done / idle). Mouse works everywhere: click panes, drag borders, right-click for menus, drag-select to copy, Ctrl+click links.</p>
+    <div class="alert alert-success"><span>Forgot a key? <span class="kbd kbd-sm">Ctrl+a</span> <span class="kbd kbd-sm">?</span> shows the live built-in cheat sheet. Docs online say Ctrl+b - yours is remapped to <b>Ctrl+a</b>.</span></div>
+
+    <h3 class="text-xl font-semibold">Terminal commands</h3>
+    <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+      <table class="table table-zebra table-sm">
+        <thead><tr><th>Command</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>herdr</code></td><td>start or reattach your default session - the one daily command</td></tr>
+          <tr><td><code>herdr status</code></td><td>is the background server running?</td></tr>
+          <tr><td><code>herdr session list</code></td><td>list sessions with status and directory</td></tr>
+          <tr><td><code>herdr --session name</code></td><td>create/attach a separate named session (own workspaces)</td></tr>
+          <tr><td><code>herdr session stop name</code></td><td>stop one session - KILLS its processes</td></tr>
+          <tr><td><code>herdr server stop</code></td><td>stop everything, agents included - the real off switch</td></tr>
+          <tr><td><code>herdr server reload-config</code></td><td>apply config.toml edits to the running server</td></tr>
+          <tr><td><code>herdr integration install claude</code></td><td>one-time: teaches the sidebar to read Claude's real state + lets Claude resume after restarts</td></tr>
+          <tr><td><code>herdr agent list</code></td><td>every detected agent and its state, from any shell</td></tr>
+          <tr><td><code>herdr worktree create --branch name</code></td><td>new git-worktree workspace (parallel work on one repo)</td></tr>
+          <tr><td><code>herdr update --handoff</code></td><td>update herdr without killing live panes</td></tr>
+          <tr><td><code>herdr --default-config | less</code></td><td>every setting, commented - the config reference</td></tr>
+          <tr><td><code>herdr --remote user@host</code></td><td>attach to a herdr on another machine over SSH (your VPS, someday)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="text-xl font-semibold">Keys - press <span class="kbd kbd-sm">Ctrl+a</span>, release, then:</h3>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+        <table class="table table-zebra table-sm">
+          <thead><tr><th colspan="2">Panes &amp; layout</th></tr></thead>
+          <tbody>
+            <tr><td><span class="kbd kbd-xs">Shift+A</span></td><td><b>open Claude Code in a pane</b> (your custom binding)</td></tr>
+            <tr><td><span class="kbd kbd-xs">v</span> / <span class="kbd kbd-xs">-</span></td><td>split right / split below</td></tr>
+            <tr><td><span class="kbd kbd-xs">h</span> <span class="kbd kbd-xs">j</span> <span class="kbd kbd-xs">k</span> <span class="kbd kbd-xs">l</span></td><td>focus pane left/down/up/right (or just click)</td></tr>
+            <tr><td><span class="kbd kbd-xs">z</span></td><td>zoom pane fullscreen (again to undo)</td></tr>
+            <tr><td><span class="kbd kbd-xs">x</span></td><td>close pane</td></tr>
+            <tr><td><span class="kbd kbd-xs">r</span></td><td>keyboard resize mode (or drag borders)</td></tr>
+            <tr><td><span class="kbd kbd-xs">Tab</span></td><td>cycle panes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+        <table class="table table-zebra table-sm">
+          <thead><tr><th colspan="2">Tabs, workspaces, session</th></tr></thead>
+          <tbody>
+            <tr><td><span class="kbd kbd-xs">c</span> · <span class="kbd kbd-xs">n</span>/<span class="kbd kbd-xs">p</span> · <span class="kbd kbd-xs">1..9</span></td><td>new tab (asks a name) · next/prev · jump to tab</td></tr>
+            <tr><td><span class="kbd kbd-xs">Shift+N</span> / <span class="kbd kbd-xs">Shift+D</span></td><td>new / close workspace (one workspace per project!)</td></tr>
+            <tr><td><span class="kbd kbd-xs">w</span></td><td>workspace picker (arrows move, enter selects)</td></tr>
+            <tr><td><span class="kbd kbd-xs">b</span></td><td>toggle the agent sidebar</td></tr>
+            <tr><td><span class="kbd kbd-xs">o</span></td><td>jump to the pane that just notified</td></tr>
+            <tr><td><span class="kbd kbd-xs">[</span></td><td>copy mode: <span class="kbd kbd-xs">v</span> select, <span class="kbd kbd-xs">y</span> copy, <span class="kbd kbd-xs">q</span> exit</td></tr>
+            <tr><td><span class="kbd kbd-xs">e</span></td><td>open scrollback in an editor (great for long agent output)</td></tr>
+            <tr><td><span class="kbd kbd-xs">q</span></td><td><b>detach</b> - everything keeps running</td></tr>
+            <tr><td><span class="kbd kbd-xs">s</span> / <span class="kbd kbd-xs">?</span></td><td>settings UI / key help</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div tabindex="0" class="collapse collapse-arrow bg-base-200 border border-base-content/10">
+        <div class="collapse-title font-semibold">Your first session, step by step</div>
+        <div class="collapse-content text-sm opacity-90"><ol class="list-decimal list-inside space-y-1">
+          <li>WezTerm → <code>wsl</code> → <code>cd ~/github/dotfiles-wsl</code> (any project)</li>
+          <li><code>herdr</code> - first run starts the server; sidebar left, shell right</li>
+          <li>One-time: <code>herdr integration install claude</code></li>
+          <li><span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">Shift+A</span> - Claude opens; first ever run asks you to log in (browser)</li>
+          <li><span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">v</span> - shell pane beside it; run <code>nvim .</code> there for the Kun layout</li>
+          <li>Detach with <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">q</span>, close the window, walk away</li>
+          <li>Later: <code>wsl</code> → <code>herdr</code> - everything is exactly where you left it</li>
+        </ol></div>
+      </div>
+      <div tabindex="0" class="collapse collapse-arrow bg-base-200 border border-warning/30">
+        <div class="collapse-title font-semibold text-warning">Traps to know</div>
+        <div class="collapse-content text-sm opacity-90"><ul class="list-disc list-inside space-y-1">
+          <li><span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">q</span> detaches (keeps running); <code>herdr server stop</code> KILLS everything including Claude. Don't confuse them.</li>
+          <li>After a server restart your layout comes back but running programs don't - shells return empty (Claude can resume itself if the integration is installed).</li>
+          <li>Ctrl+a normally means "jump to line start" in shells - herdr eats it as the prefix. Use <span class="kbd kbd-xs">Home</span> instead.</li>
+          <li>herdr inside herdr is blocked - if it refuses to start, you're already in it.</li>
+          <li>New tabs pause to ask for a name - it's a prompt, not a hang.</li>
+          <li><code>herdr config reset-keys</code> would wipe your Ctrl+a prefix and the Shift+A Claude binding.</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 NEOVIM -->
+  <section id="neovim" class="space-y-3">
+    <h2 class="text-3xl font-bold">5 · Neovim <span class="badge badge-soft badge-accent align-middle">both sides</span></h2>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="card card-border bg-base-200"><div class="card-body p-4">
+        <h3 class="card-title text-base">Survival kit (plain vim)</h3>
+        <div class="overflow-x-auto"><table class="table table-sm"><tbody>
+          <tr><td><span class="kbd kbd-xs">i</span></td><td>insert mode - type normally</td></tr>
+          <tr><td><span class="kbd kbd-xs">Esc</span></td><td>back to normal mode - <b>and saves</b> (your config)</td></tr>
+          <tr><td><span class="kbd kbd-xs">:q</span> / <span class="kbd kbd-xs">:q!</span></td><td>quit / quit WITHOUT saving</td></tr>
+          <tr><td><span class="kbd kbd-xs">u</span> / <span class="kbd kbd-xs">Ctrl+R</span></td><td>undo / redo</td></tr>
+          <tr><td><span class="kbd kbd-xs">/word</span> then <span class="kbd kbd-xs">n</span></td><td>search, next hit</td></tr>
+          <tr><td><span class="kbd kbd-xs">v</span> · <span class="kbd kbd-xs">y</span> · <span class="kbd kbd-xs">p</span> · <span class="kbd kbd-xs">dd</span></td><td>select · copy · paste · delete line</td></tr>
+          <tr><td><span class="kbd kbd-xs">gg</span> / <span class="kbd kbd-xs">G</span></td><td>top / bottom of file</td></tr>
+          <tr><td><span class="kbd kbd-xs">Ctrl+A</span></td><td>select all (your config)</td></tr>
+        </tbody></table></div>
+      </div></div>
+      <div class="card card-border bg-base-200"><div class="card-body p-4">
+        <h3 class="card-title text-base">Leader = <span class="kbd kbd-sm">Space</span> (press it, wait → menu)</h3>
+        <div class="overflow-x-auto"><table class="table table-sm"><tbody>
+          <tr><td><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">f</span></td><td>find files by name (fuzzy - type part of it)</td></tr>
+          <tr><td><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">s</span></td><td>search TEXT across the whole project</td></tr>
+          <tr><td><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">b</span></td><td>switch between open files</td></tr>
+          <tr><td><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">e</span></td><td>file browser (oil - see below)</td></tr>
+          <tr><td><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">g</span></td><td>git UI (neogit - see below)</td></tr>
+          <tr><td><span class="kbd kbd-xs">gd</span></td><td>jump to where a function/variable is defined</td></tr>
+        </tbody></table></div>
+        <p class="text-xs opacity-60">Gray text on lines = git blame (who, when) - automatic via gitsigns. <code>:Lazy</code> opens the plugin manager (<span class="kbd kbd-xs">U</span> updates plugins, <span class="kbd kbd-xs">q</span> closes).</p>
+      </div></div>
+    </div>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div tabindex="0" class="collapse collapse-arrow bg-base-200 border border-base-content/10">
+        <div class="collapse-title font-semibold">oil - the file browser that's a text file</div>
+        <div class="collapse-content text-sm opacity-90"><ol class="list-decimal list-inside space-y-1">
+          <li><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">e</span> - the folder appears as an editable list</li>
+          <li><span class="kbd kbd-xs">Enter</span> opens a file/folder · <span class="kbd kbd-xs">-</span> goes up one level</li>
+          <li>RENAME: edit the filename like any text (<span class="kbd kbd-xs">i</span>, type, <span class="kbd kbd-xs">Esc</span>)</li>
+          <li>DELETE: <span class="kbd kbd-xs">dd</span> the line · NEW FILE: add a line with the name (end folders with /)</li>
+          <li><span class="kbd kbd-xs">:w</span> - a confirmation shows exactly what will happen; accept and it's done for real</li>
+        </ol></div>
+      </div>
+      <div tabindex="0" class="collapse collapse-arrow bg-base-200 border border-base-content/10">
+        <div class="collapse-title font-semibold">neogit - commit and push without leaving the editor</div>
+        <div class="collapse-content text-sm opacity-90"><ol class="list-decimal list-inside space-y-1">
+          <li><span class="kbd kbd-xs">Space</span> <span class="kbd kbd-xs">g</span> - status view: changed files listed</li>
+          <li><span class="kbd kbd-xs">s</span> on a file = stage it (<span class="kbd kbd-xs">u</span> unstages) · <span class="kbd kbd-xs">Tab</span> peeks at the diff</li>
+          <li><span class="kbd kbd-xs">c</span><span class="kbd kbd-xs">c</span> - commit editor opens; write the message, then <span class="kbd kbd-xs">:wq</span></li>
+          <li><span class="kbd kbd-xs">P</span> then <span class="kbd kbd-xs">p</span> - push · <span class="kbd kbd-xs">q</span> - back to your code</li>
+        </ol></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 CLAUDE -->
+  <section id="claude" class="space-y-3">
+    <h2 class="text-3xl font-bold">6 · Claude Code <span class="badge badge-soft badge-accent align-middle">both sides</span></h2>
+    <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+      <table class="table table-zebra table-sm">
+        <thead><tr><th>Command</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>claude</code></td><td>start a session in the current folder (first run in WSL: browser login, one time)</td></tr>
+          <tr><td><code>cc</code></td><td>same but skips ALL permission prompts - great inside herdr, use with intention</td></tr>
+          <tr><td><code>claude -c</code></td><td>continue your most recent conversation in this folder</td></tr>
+          <tr><td><code>/help</code> · <code>/clear</code></td><td>inside a session: list commands · start a fresh conversation</td></tr>
+          <tr><td><span class="kbd kbd-xs">Shift+Tab</span></td><td>inside a session: cycle permission modes (normal → auto-accept edits → plan mode)</td></tr>
+          <tr><td><span class="kbd kbd-xs">Esc</span></td><td>inside a session: interrupt Claude mid-answer</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert"><span><b>Your standing orders</b> live in <code>home\AGENTS.md</code> (in both repos) - shared by Claude, Codex, and opencode. Edit it when you catch yourself repeating a preference. Windows: run <code>.\rebuild.ps1</code> after. WSL: live instantly. Then commit + push.</span></div>
+    <p class="text-sm opacity-70">The status line at the bottom of Claude Code (model + context %) is yours too: <code>home\claude\statusline.ps1</code>.</p>
+  </section>
+
+  <!-- 7 WORKFLOW TOOLS -->
+  <section id="tools" class="space-y-6">
+    <h2 class="text-3xl font-bold">7 · The workflow tools</h2>
+
+    <!-- skills -->
+    <div id="m-skills" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">skills CLI <span class="badge badge-soft badge-accent badge-sm">both</span></h3>
+      <p class="text-sm opacity-80">Package manager for agent skills - "npm install, but for Claude abilities". Browse the registry at skills.sh.</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><code>npx -y skills find</code></td><td>browse the registry interactively (or <code>find react</code> to search)</td></tr>
+          <tr><td><code>npx -y skills add owner/repo -l</code></td><td>PREVIEW what a repo contains - installs nothing</td></tr>
+          <tr><td><code>npx -y skills add owner/repo --skill name -g --copy</code></td><td>install one skill, user-level; <code>--copy</code> always on Windows (OneDrive + symlinks don't mix)</td></tr>
+          <tr><td><code>npx -y skills ls</code> / <code>ls -g</code></td><td>list project / global skills (scopes are separate!)</td></tr>
+          <tr><td><code>npx -y skills update -y</code></td><td>refresh installed skills (run every few weeks)</td></tr>
+          <tr><td><code>npx -y skills remove name</code></td><td>uninstall</td></tr>
+          <tr><td><code>npx -y skills use repo@skill | claude</code></td><td>try a skill ONCE without installing</td></tr>
+          <tr><td><code>npx -y skills init my-skill</code></td><td>scaffold your own skill</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">Traps: installs default to PROJECT scope (use -g for everywhere) · Windows and WSL are separate installs · new skills only appear in NEW Claude sessions · skills are instructions your agent will follow - only install from repos you trust.</p>
+    </div></div>
+
+    <!-- lavish -->
+    <div id="m-lavish" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">lavish <span class="badge badge-success badge-sm">you're inside it now</span></h3>
+      <p class="text-sm opacity-80">Claude writes an HTML page, it opens in your browser, you click/select anything and attach notes, Claude reads them and revises. You rarely type these commands - the skill runs them - but they exist:</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><i>(you, in chat)</i> "...as a lavish artifact"</td><td>the trigger phrase - Claude does the rest</td></tr>
+          <tr><td><i>(you, in browser)</i> click / select text</td><td>attach a note; queue as many as you want; hit send</td></tr>
+          <tr><td><code>npx -y lavish-axi file.html</code></td><td>open/resume a review session</td></tr>
+          <tr><td><code>npx -y lavish-axi export file.html --out copy.html</code></td><td>portable single-file copy (email-able)</td></tr>
+          <tr><td><code>npx -y lavish-axi share file.html --password pw</code></td><td>publish to ht-ml.app - PUBLIC by default, use a password for anything private</td></tr>
+          <tr><td><code>npx -y lavish-axi end file.html</code> / <code>stop</code></td><td>end a session / stop the server (the reset button)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">Never share artifacts with business data (Stockroom invoices!) without --password. A session you ended in the browser politely refuses to reopen - that's by design.</p>
+    </div></div>
+
+    <!-- no-mistakes -->
+    <div id="m-nomistakes" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">no-mistakes <span class="badge badge-soft badge-secondary badge-sm">use from WSL</span></h3>
+      <p class="text-sm opacity-80">The quality gate: you push to a local "no-mistakes" remote instead of GitHub; a daemon runs a pipeline (intent → rebase → review → test → document → lint → push → pr → ci) and only clean code lands.</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><code>no-mistakes doctor</code></td><td>health check: git, gh, daemon, which agents it found</td></tr>
+          <tr><td><code>no-mistakes daemon start</code> / <code>status</code></td><td>start / check the background service (<b>currently stopped on your machine</b> - start it before first use)</td></tr>
+          <tr><td><code>no-mistakes init</code></td><td>once per repo (repo needs an origin remote): adds the gate</td></tr>
+          <tr><td><code>git push no-mistakes &lt;branch&gt;</code></td><td>THE new habit - push here instead of origin</td></tr>
+          <tr><td><code>no-mistakes attach</code></td><td>full-screen TUI to watch the pipeline and answer approval gates</td></tr>
+          <tr><td><code>no-mistakes runs</code> / <code>status</code> / <code>stats</code></td><td>history / current repo state / usage stats</td></tr>
+          <tr><td><code>no-mistakes --skip test,lint</code></td><td>skip steps for one run</td></tr>
+          <tr><td><code>no-mistakes rerun</code></td><td>re-run after a failed/cancelled outcome (never mid-run)</td></tr>
+          <tr><td><code>no-mistakes eject</code></td><td>remove the gate from a repo</td></tr>
+          <tr><td><code>no-mistakes axi run --intent "goal"</code></td><td>agent mode - tell Claude to use this to gate its own work</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">Traps: plain <code>git push origin</code> still bypasses the gate · daemon off = pushes sit unprocessed · each run drives Claude and spends real usage · use it on repos living in ~/github (WSL), not /mnt/c.</p>
+    </div></div>
+
+    <!-- gnhf -->
+    <div id="m-gnhf" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">gnhf <span class="badge badge-warning badge-sm">caps on, branch first</span></h3>
+      <p class="text-sm opacity-80">"Good night, have fun" - one objective, Claude loops on it unattended; every success is a commit, every failure rolls back, notes.md carries memory between rounds.</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><code>gnhf --max-iterations 2 "small task"</code></td><td>your first trial run - ALWAYS set a cap until you trust it</td></tr>
+          <tr><td><code>gnhf "objective"</code></td><td>full run - creates a gnhf/&lt;slug&gt; branch, commits each iteration</td></tr>
+          <tr><td><code>gnhf</code> (no prompt, on a gnhf/ branch)</td><td>resume where it left off</td></tr>
+          <tr><td><code>cat prd.md | gnhf --max-iterations 15</code></td><td>pipe a long spec as the objective</td></tr>
+          <tr><td><code>--stop-when "all tests pass"</code></td><td>natural finish line instead of a count</td></tr>
+          <tr><td><code>--max-tokens 5000000</code></td><td>hard budget cap</td></tr>
+          <tr><td><code>--worktree</code></td><td>run in a separate worktree (several runs in parallel)</td></tr>
+          <tr><td><code>--push</code></td><td>push the branch after every successful iteration</td></tr>
+          <tr><td><span class="kbd kbd-xs">Ctrl+C</span> once / twice</td><td>graceful stop (lets iteration finish) / force stop</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">Review after: <code>git log --oneline main..gnhf/branch</code> and <code>git diff main...gnhf/branch</code>; the story is in <code>.gnhf/runs/&lt;id&gt;/notes.md</code>. Traps: needs a CLEAN tree to start · overnight WSL runs need Windows power settings set to not sleep · check your Claude credits before bed · run inside herdr/tmux so it survives the window closing.</p>
+    </div></div>
+
+    <!-- gh-axi -->
+    <div id="m-ghaxi" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">gh-axi <span class="badge badge-ghost badge-sm">for Claude, mostly</span></h3>
+      <p class="text-sm opacity-80">GitHub CLI rebuilt for agents - compact output, fewer mistakes, cheaper tokens. Say "use gh-axi" when Claude does GitHub work. Your part is just verifying it works:</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><code>gh-axi</code></td><td>dashboard: detected repo + open issue/PR counts</td></tr>
+          <tr><td><code>gh-axi issue list --state open</code></td><td>real test - compact typed list proves wrapper + gh + auth all work</td></tr>
+          <tr><td><code>gh-axi pr view 42 --reviews</code> / <code>pr checks 42</code> / <code>pr diff 42</code></td><td>inspect PRs (add <code>--full</code> for untruncated)</td></tr>
+          <tr><td><code>gh-axi issue list -R owner/name</code></td><td>target another repo (-R goes AFTER the command)</td></tr>
+          <tr><td><code>gh-axi update --check</code></td><td>version check - Windows and WSL copies update separately</td></tr>
+          <tr><td><code>gh-axi setup hooks</code></td><td>optional: Claude sessions start with ambient repo context</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">Traps: write commands (merge, close, delete) hit GitHub immediately, no extra confirmation · needs gh installed AND logged in · terse output is by design, it's for agents.</p>
+    </div></div>
+
+    <!-- treehouse -->
+    <div id="m-treehouse" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">treehouse <span class="badge badge-soft badge-secondary badge-sm">WSL</span></h3>
+      <p class="text-sm opacity-80">Pool of ready-to-use repo copies (git worktrees) so parallel agents don't collide. firstmate drives it automatically; by hand:</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><code>treehouse get</code></td><td>hands you a fresh worktree in a subshell; <code>exit</code> returns it. First thing inside: <code>git switch -c my-branch</code> (it starts detached!)</td></tr>
+          <tr><td><code>treehouse status</code></td><td>what's out, what's free (run inside the repo)</td></tr>
+          <tr><td><code>WT=$(treehouse get --lease)</code></td><td>script/agent mode: reserved path, no subshell; release with <code>treehouse return "$WT"</code></td></tr>
+          <tr><td><code>treehouse prune</code> → <code>prune --yes</code></td><td>dry-run then actually reclaim disk from stale worktrees</td></tr>
+          <tr><td><code>treehouse destroy path --yes</code></td><td>remove one specific worktree (dry-run first without --yes)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">Traps: commit + push BEFORE exiting a worktree - returned ones get recycled · <code>--include-unlanded</code> = irreversible data loss · pool lives at ~/.treehouse in WSL.</p>
+    </div></div>
+
+    <!-- firstmate -->
+    <div id="m-firstmate" class="card card-border bg-base-200"><div class="card-body p-4 space-y-2">
+      <h3 class="card-title">firstmate <span class="badge badge-ghost badge-sm">the deep end</span> <span class="badge badge-soft badge-secondary badge-sm">WSL</span></h3>
+      <p class="text-sm opacity-80">Not a program - a repo whose AGENTS.md turns Claude into a captain's first mate that spawns crew agents in tmux windows, each in its own worktree, and brings you finished PRs. You talk to ONE agent in plain English.</p>
+      <div class="overflow-x-auto rounded-box bg-base-100"><table class="table table-sm table-zebra">
+        <tbody>
+          <tr><td><code>tmux new -s firstmate</code> then <code>cd ~/github/firstmate && claude</code></td><td>the entire launch - AGENTS.md takes over</td></tr>
+          <tr><td><i>"ahoy! scout my github project RamiroRivas2/X - report on ..."</i></td><td>a safe read-only first task (reports land at data/&lt;id&gt;/report.md)</td></tr>
+          <tr><td><i>"fix the flaky login test and add dark mode"</i></td><td>ship tasks - it clones the repo under projects/, spawns crew, hands you a PR</td></tr>
+          <tr><td><i>"merge it"</i></td><td>your approval - nothing merges without it</td></tr>
+          <tr><td><span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">w</span></td><td>hop between your chat window and crew windows (LOOK, don't type - typing in a crew window is a captain's order)</td></tr>
+          <tr><td><code>/afk</code> · <code>/stow</code> · <code>/updatefirstmate</code></td><td>cheap away-mode supervision · save session knowledge · self-update</td></tr>
+        </tbody>
+      </table></div>
+      <p class="text-xs opacity-60">First run will ask to install <code>tasks-axi</code> - say yes. Traps: each crewmate is a full Claude session (3 tasks ≈ 3x usage) · give it GitHub repo names, never /mnt/c paths · put standing preferences in data/captain.md · leave +yolo off until you trust it.</p>
+    </div></div>
+
+    <div class="alert"><span>Dictation: <span class="kbd kbd-sm">Win+H</span> anywhere in Windows types what you say - works pointed at a herdr pane running Claude. If you love it, ask me to install <b>Handy</b> (open-source, offline).</span></div>
+  </section>
+
+  <!-- 8 TROUBLE -->
+  <section id="trouble" class="space-y-3">
+    <h2 class="text-3xl font-bold">8 · When something looks broken</h2>
+    <div class="overflow-x-auto rounded-box border border-base-content/10 bg-base-200">
+      <table class="table table-zebra table-sm">
+        <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Prompt looks plain / no colors</td><td>you're in old Windows PowerShell - use WezTerm or <code>pwsh</code></td></tr>
+          <tr><td>WezTerm looks default</td><td><span class="kbd kbd-xs">Ctrl+Shift+L</span> shows config errors</td></tr>
+          <tr><td><code>-bash:</code> errors in WSL</td><td>old session from before zsh - type <code>zsh</code> or open fresh</td></tr>
+          <tr><td>"cd: github: No such file" in WSL</td><td>your WSL repos are at <code>~/github</code> (with the ~)</td></tr>
+          <tr><td>herdr refuses to start</td><td>you're already inside herdr (nesting is blocked)</td></tr>
+          <tr><td>push to no-mistakes does nothing</td><td><code>no-mistakes daemon status</code> → <code>daemon start</code></td></tr>
+          <tr><td>a skill doesn't show in Claude</td><td>skills load at session start - open a NEW session; check scope with <code>skills ls</code> vs <code>ls -g</code></td></tr>
+          <tr><td>WSL rebuild errors</td><td>read the message; the flake is pinned so errors are usually typos in home.nix</td></tr>
+          <tr><td>anything else</td><td>ask Claude, paste the exact error - both repos are on GitHub, nothing is unfixable</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm opacity-60">Docs live in both repos: <code>CHEATSHEET.md</code> (quick), <code>GUIDE.md</code> (concepts), and this page (<code>manual.html</code>, portable copy committed to the repo).</p>
+  </section>
+
+</main>
+</body>
+</html>
