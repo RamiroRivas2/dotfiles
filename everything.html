@@ -391,6 +391,17 @@
     </div></div>
 
     <div class="card card-border bg-base-200"><div class="card-body p-4">
+      <h3 class="font-semibold">Flow 1b · The cockpit - where do I type what?</h3>
+      <p class="text-sm opacity-85">Every pane is just a terminal. Claude gets one, nvim gets one, and YOUR commands (git, no-mistakes...) go in a third plain pane - never into Claude's chat box or into nvim. Being "in the repo" just means the pane's folder is the repo (<code>cd ~/github/&lt;repo&gt;</code> before starting herdr; new panes inherit it).</p>
+      <div class="mockup-code text-xs"><pre><code>┌─────────────┬─────────────┐
+│             │    nvim     │  ← read code   (Ctrl+a v, then: nvim .)
+│   Claude    ├─────────────┤
+│  (talk)     │   shell ❯   │  ← run commands (Ctrl+a -, stays a shell)
+└─────────────┴─────────────┘</code></pre></div>
+      <p class="text-sm opacity-85">Run <code>no-mistakes attach</code> in the shell pane and zoom it with <span class="kbd kbd-xs">Ctrl+a</span> <span class="kbd kbd-xs">z</span>. Or skip typing entirely: tell the Claude pane <i>"commit this and push it through no-mistakes"</i> - it runs the commands itself. Bonus: in Claude's chat, a line starting with <code>!</code> runs directly in the shell (e.g. <code>!no-mistakes daemon status</code>).</p>
+    </div></div>
+
+    <div class="card card-border bg-base-200"><div class="card-body p-4">
       <h3 class="font-semibold">Flow 2 · Ship a change through no-mistakes</h3>
       <ol class="flow list-decimal list-inside text-sm">
         <li><i>First time:</i> <code>no-mistakes daemon start</code> → <code>cd ~/github/dotfiles-wsl</code> → <code>no-mistakes init</code></li>
